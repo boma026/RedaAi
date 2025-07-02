@@ -25,7 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-indigo-600 to-blue-500 min-h-screen`}>
-        {children}
+     <header className="w-full px-6 py-4 bg-purple-700/70 backdrop-blur-md text-white shadow-md">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl">📝</span>
+          <h1 className="text-xl font-bold tracking-wide">RedaAI</h1>
+        </div>
+      </header>
+
+      {children}
       </body>
     </html>
   );

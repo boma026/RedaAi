@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
      <main className="min-h-screen flex items-center justify-center text-white px-4">
@@ -8,17 +10,17 @@ export default function Home() {
         </p>
         
         <div className="flex flex-col gap-4">
-          <a href="/login">
-            <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded cursor-pointer">
-              Fazer Login
-            </button>
-          </a>
+            <Link href={"/register"}>
+              <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded cursor-pointer">
+                Fazer Login
+              </button>
+            </Link>
           
-          <a href="/register">
+          <Link href={"/register"}>
             <button className="w-full bg-white border border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-semibold py-2 px-4 rounded cursor-pointer">
               Criar Conta
             </button>
-          </a>
+            </Link>
         </div>
       </div>
     </main>

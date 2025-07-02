@@ -1,7 +1,12 @@
+"use client"
+
+import Forms from "../components/Forms"
+
 export default function Register () {
+    
     return (
-        <div className="container min-h-screen mx-auto bg-red-700">
-            <div className=""></div>
+        <div className="w-full min-h-screen flex justify-center items-center">
+            <Forms/>
         </div>
     )
 }
