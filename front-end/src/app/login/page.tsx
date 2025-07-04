@@ -1,4 +1,4 @@
-import getFormData from "@/actions/getFormData";
+"use client"
 import { useState } from "react";
 
 export default function Forms() {
@@ -15,7 +15,7 @@ export default function Forms() {
             <div className="bg-white text-gray-900 rounded-lg shadow-xl p-10 max-w-2xl w-full text-center">
             <h1 className="font-bold text-3xl mb-10 text-center">Login</h1>
 
-            <form action={getFormData} className="grid grid-cols-1 gap-x-8 gap-y-6">
+            <form className="grid grid-cols-1 gap-x-8 gap-y-6">
                 <input
                 type="text"
                 value={usuario}

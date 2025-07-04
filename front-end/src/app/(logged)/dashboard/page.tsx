@@ -15,7 +15,7 @@ export default function Dashboard() {
       {/* Header */}
       <header>
         <h1 className="text-3xl font-bold text-gray-800">📊 Dashboard - RedaAI</h1>
-        <p className="text-gray-600">Bem-vindo de volta, Arthur!</p>
+        <p className="text-gray-600 text-xl p-2">Bem-vindo de volta, Arthur!</p>
       </header>
 
       {/* Cards de Estatísticas */}
