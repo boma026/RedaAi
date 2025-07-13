@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link";
 
 export default function Home() {
@@ -26,15 +24,15 @@ export default function Home() {
           "A educação transforma vidas. Nossa IA quer transformar a sua."
         </p>
 
-        <div className="flex flex-row md:flex-row gap-4 ">
+        <div className="flex flex-row md:flex-row gap-4 justify-center">
           <Link href={"/login"}>
-            <button className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition">
+            <button className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md cursor-pointer transition">
               Fazer Login
             </button>
           </Link>
 
           <Link href={"/register"}>
-            <button className="w-full md:w-auto bg-white border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-semibold py-3 px-6 rounded-lg transition">
+            <button className="w-full md:w-auto bg-white border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-semibold cursor-pointer py-3 px-6 rounded-lg transition">
               Criar Conta Gratuita
             </button>
           </Link>
