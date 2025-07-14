@@ -38,6 +38,7 @@ export const loginController:RequestHandler = async (req,res) => {
     const { user, password } = req.body;
     console.log(user,password);
     const userVerified = await verifyUser(user, password);
+    
     if(userVerified){
         const token = JWT.sign(
             {id: userVerified.id, user: userVerified.user}, 
@@ -52,27 +53,6 @@ export const loginController:RequestHandler = async (req,res) => {
     }
 } 
 
-/*
-export const getEssaysController:RequestHandler = async (req,res) => {
-    const {id} = req.body;
-    const userEssays = await getEssay(id);
-    if(userEssays){
-        res.status(200).json({ userEssays })
-    }
-    else{
-        res.status(500).json({error: "Deu problema!"})
-    }
+export const verifyController:RequestHandler = async (req, res) => {
+    res.status(200).json({status: true});
 }
-
-export const addEssayController:RequestHandler = async (req,res) => {
-    const {essay} = req.body;
-    const createdUser = await addEssay(essay);
-    if(createdUser){
-        res.status(201).json({ createdUser })
-    }
-    else{
-        res.status(500).json({error: "Deu problema!"})
-    }
-}
-
-*/
