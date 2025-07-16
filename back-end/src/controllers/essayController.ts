@@ -25,14 +25,16 @@ export const getEssayController:RequestHandler = async (req, res) => {
 }
 
 export const postEssayController:RequestHandler = async (req,res) => {
-    console.log(req.body);
+ 
     if(!req.body.essayTitle || !req.body.essayBody || !req.body.userId){
         res.status(400).json({error: "dados faltantes"})
         return; 
     }
+    
     try{
         const postEssay = await postUserEssay(req.body.essayTitle, req.body.essayBody, req.body.userId);
         if(postEssay){
+            console.log("redaçao postada")
             res.status(201).json({postEssay, status: true});
             return;
         }

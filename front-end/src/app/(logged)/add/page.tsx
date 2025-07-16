@@ -3,7 +3,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { api } from "../../../../utils/api";
 import { PrivateRouter } from "@/app/components/PrivateRouter";
-import { Essay } from "@/app/types/Essays";
 import { useUserCtx } from "@/app/context/userContext";
 import { User } from "@/app/types/User";
 import { useRouter } from "next/navigation";
@@ -13,38 +12,59 @@ export default function AddEssay () {
     const [essayTitle, setEssayTitle] = useState<string>("");
     const [essayBody, setEssayBody] = useState<string>("");
     const [userId, setUserId] = useState<number>();
+    const [token, setToken] = useState<string>("");
     const router = useRouter();
     const userCtx = useUserCtx();
 
     const handleSendEssay = async (e: FormEvent<HTMLFormElement>) => {
+      
       e.preventDefault();
-      const res = await api.post("/essay", {
+      console.log("passou aqui");
+      try{
+        console.log("passou aqui")
+        const res = await api.post("/essay", {
         essayBody,
         essayTitle,
-        userId
-      })
-      console.log(res.data);
-      setEssayTitle("");
-      setEssayBody("");
-      router.push("/dashboard");
+        userId,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }       
+        }
+      )
+        console.log("Resposta da API:", res.data);
+        setEssayTitle("");
+        setEssayBody("");
+        router.push("/dashboard");
+
+      }catch(e) {
+        console.log("erro ao enviar redaçao")
+      }
     }
 
     useEffect(() => {
-      const userData = (localStorage.getItem("user"))
-      
-      if(userData){
+      const userData = localStorage.getItem("user")
+      const token = localStorage.getItem("token");
+
+      if(userData && token){
+        setToken(token);
         const user: User = JSON.parse(userData);
         userCtx.setfullUser(user);
         setUserId(user.id);
       }
     },[])
 
+    if(!token) {
+      return (
+        <div>carregando...</div>
+      )
+    }
+
     return (
       <PrivateRouter>
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
           <div className="max-w-3xl w-full bg-white rounded-xl shadow-md p-10">
             <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Envie sua Redação, {userCtx.fullUser?.name}</h1>
-            <form className="space-y-6" onSubmit={handleSendEssay}>
+            <form className="space-y-6" onSubmit={(e) => handleSendEssay(e)}>
               <div>
                 <label className="block text-lg font-medium text-gray-700 mb-2">
                   Digite sua redação abaixo:
@@ -66,7 +86,8 @@ export default function AddEssay () {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold rounded-lg transition duration-200"
+                disabled={!token}
+                className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold rounded-lg transition duration-200 disabled:bg-gray-400"
               >
                 Enviar Redação
               </button>

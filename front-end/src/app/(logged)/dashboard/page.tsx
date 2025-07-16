@@ -24,8 +24,12 @@ export default function Dashboard() {
     router.push(`/essay/${idEssay}`);
   }
 
-  const fetchEssays = async (userId:number) => {
+  const fetchEssays = async (userId:number, token: string) => {
     const res = await api.get("/essays", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      
       params: {
         userId
       }
@@ -36,13 +40,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     
-    const userData = (localStorage.getItem("user"))
-
-    if(userData){
-      const user: User = JSON.parse(userData);
-      userCtx.setfullUser(user);
-      fetchEssays(user.id);
-    }
+    const userData: User = JSON.parse((localStorage.getItem("user") as string))
+    const token = localStorage.getItem("token") as string;
+    userCtx.setfullUser(userData);
+    fetchEssays(userData.id, token);
     
   },[])
 
@@ -59,7 +60,7 @@ export default function Dashboard() {
   
   return (
     <PrivateRouter>
-      <div className="min-h-screen bg-gray-100 p-6">
+      <div className="min-h-screen bg-gray-100 p-6 ">
         {/* Header */}
          <header>
             <h1 className="text-3xl font-bold text-gray-800">📊 Dashboard - RedaAI</h1>
@@ -68,20 +69,20 @@ export default function Dashboard() {
         {/* Cards de Estatísticas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           <div className="bg-white shadow rounded-xl p-6">
-            <p className="text-gray-500">Redações Enviadas</p>
-            <h2 className="text-2xl font-bold">{essays.length}</h2>
+            <p className="text-black">Redações Enviadas</p>
+            <h2 className="text-2xl font-bold text-black ">{essays.length}</h2>
           </div>
           <div className="bg-white shadow rounded-xl p-6">
-            <p className="text-gray-500">Corrigidas</p>
-            <h2 className="text-2xl font-bold">{essays.filter((item) => item.status === "CORRIGIDA").length}</h2>
+            <p className="text-black">Corrigidas</p>
+            <h2 className="text-2xl font-bold text-black">{essays.filter((item) => item.status === "CORRIGIDA").length}</h2>
           </div>
           <div className="bg-white shadow rounded-xl p-6">
-            <p className="text-gray-500">Média de nota</p>
-            <h2 className="text-2xl font-bold">{averageGrade(essays)}</h2>
+            <p className="text-black">Média de nota</p>
+            <h2 className="text-2xl font-bold text-black">{averageGrade(essays)}</h2>
           </div>
           <div className="bg-white shadow rounded-xl p-6">
-            <p className="text-gray-500">Último envio</p>
-            <h2 className="text-2xl font-bold">{new Date(essays[0]?.createdAt).toLocaleDateString("pt-BR")}</h2>
+            <p className="text-black">Último envio</p>
+            <h2 className="text-black text-2xl font-bold">{essays.length === 0 ? "---" : new Date(essays[0]?.createdAt).toLocaleDateString("pt-BR")}</h2>
           </div>
         </div>
 
@@ -98,7 +99,7 @@ export default function Dashboard() {
           </div>
           <table className="w-full table-auto text-left">
             <thead>
-              <tr className="border-b text-gray-500">
+              <tr className="border-b text-black">
                 <th className="py-2">Título</th>
                 <th className="py-2">Data de Envio</th>
                 <th className="py-2">Nota</th>
@@ -108,10 +109,10 @@ export default function Dashboard() {
             <tbody>
 
               {essays.map((userEssay) =>
-                <tr className="border-b" key={userEssay.id} onClick={() => handleChangeToEssay(userEssay.id)}>
-                  <td className="py-3">{userEssay.title}</td>
-                  <td>{new Date(userEssay.createdAt).toLocaleDateString("pt-BR")}</td>
-                  <td>
+                <tr className="border-b hover:bg-gray-200 cursor-pointer " key={userEssay.id} onClick={() => handleChangeToEssay(userEssay.id)}>
+                  <td className="py-3 text-black">{userEssay.title}</td>
+                  <td className="text-black">{new Date(userEssay.createdAt).toLocaleDateString("pt-BR")}</td>
+                  <td className="text-black">
                     {userEssay.status === "ENVIADA" ? "---": userEssay.grade}
                   </td>
                   <td><span className="text-green-600 font-semibold">{userEssay.status}</span></td>

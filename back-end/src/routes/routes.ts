@@ -15,8 +15,8 @@ router.post("/login", loginController);
 
 router.get("/verify", auth, verifyController);
 
-router.get(("/essay"), getEssayController);
+router.get("/essay",auth, getEssayController);
 
-router.get("/essays", getEssaysController);
+router.get("/essays", auth, getEssaysController);
 
-router.post("/essay", postEssayController);
+router.post("/essay", auth, postEssayController);

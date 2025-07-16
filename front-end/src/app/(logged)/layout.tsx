@@ -14,9 +14,9 @@ export default function LoggedLayout ({children}: Props) {
         {/* Sidebar */}
         <aside className="w-60 bg-[#F2F2F7] p-4">
           <nav className="flex flex-col gap-2">
-            <Link href="/add" className="py-2 px-4 rounded hover:bg-[#440986] hover:text-white">Nova redaçao</Link>
-            <Link href="/dashboard" className="py-2 px-4 rounded hover:bg-[#440986] hover:text-white">Dashboard</Link> 
-            <Link href="/editProfile" className="py-2 px-4 rounded hover:bg-[#440986] hover:text-white">Profile</Link>
+            <Link href="/add" className="py-2 px-4 rounded hover:bg-[#440986] hover:text-white text-black">Nova redaçao</Link>
+            <Link href="/dashboard" className="py-2 px-4 rounded hover:bg-[#440986] hover:text-white text-black">Dashboard</Link> 
+            <Link href="/editProfile" className="py-2 px-4 rounded hover:bg-[#440986] hover:text-white text-black">Profile</Link>
           </nav>
         </aside>
 

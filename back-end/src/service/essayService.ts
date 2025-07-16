@@ -22,7 +22,8 @@ export const postUserEssay = async (essayTitle: string, essayBody: string, userI
     .catch((e) => {
         console.error("erro na correçao por IA", e);
 
-        return newEssay;
     })
+    
+    return newEssay;
 }
 
