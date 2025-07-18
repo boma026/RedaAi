@@ -13,25 +13,22 @@ export default function RedacaoPage() {
   const [essay, setEssay] = useState<Essay | null>(null);
   
   const fetchEssay = async (userId: number, essayId: number, token: string) => {
-    const res = await api.get("/essay", {
+    try{
+      const res = await api.get("/essay", {
       headers: {Authorization: `Bearer ${token}`},
       params: { essayId, userId } })
-
-      console.log(res.data);
       
-      if(res.data.essay){
-        setEssay(res.data.essay);
-        console.log(res.data.essay);
-        
-      }
-  } 
+      setEssay(res.data.essay);    
+    }catch(e) {
+      console.error("erro ao pegar redaçoes", e);
+    }
+    }
+  
 
   useEffect(() => {
     const user: User = JSON.parse(localStorage.getItem("user") as string);
     const essayId = JSON.parse(localStorage.getItem("IdEssay") as string);
     const token = localStorage.getItem("token") as string;
-
-    console.log(essayId);
     userCtx.setfullUser(user);
     fetchEssay(user.id, essayId, token);
   }, [])

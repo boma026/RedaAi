@@ -25,7 +25,8 @@ export default function Dashboard() {
   }
 
   const fetchEssays = async (userId:number, token: string) => {
-    const res = await api.get("/essays", {
+    try{
+      const res = await api.get("/essays", {
       headers: {
         Authorization: `Bearer ${token}`
       },
@@ -35,7 +36,10 @@ export default function Dashboard() {
       }
     });
     setEssays(res.data.essays);
-    console.log(res.data.essays)
+    }
+    catch(e) {
+      console.error("Erro ao buscar redações");
+    }
   }
 
   useEffect(() => {
@@ -61,12 +65,12 @@ export default function Dashboard() {
   return (
     <PrivateRouter>
       <div className="min-h-screen bg-gray-100 p-6 ">
-        {/* Header */}
+        
          <header>
             <h1 className="text-3xl font-bold text-gray-800">📊 Dashboard - RedaAI</h1>
             <p className="text-gray-600 text-xl p-2">Bem-vindo de volta, {userCtx.fullUser?.name}</p>
         </header>
-        {/* Cards de Estatísticas */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           <div className="bg-white shadow rounded-xl p-6">
             <p className="text-black">Redações Enviadas</p>
@@ -86,7 +90,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Tabela de redações */}
         <div className="bg-white rounded-xl shadow p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-800">Suas redações</h2>

@@ -3,7 +3,8 @@ import { prisma } from "../libs/prisma"
 import { CorrectionResult } from "../types";
 
 export const getUserEssaysModel = async (id: number) => {
-    const user= await prisma.user.findFirst({
+    try {
+        const user= await prisma.user.findFirst({
         where: {id},
         select: {
             essay: {
@@ -20,9 +21,13 @@ export const getUserEssaysModel = async (id: number) => {
                     createdAt: "desc"
                 }
             }
-        }
-    })
-    return user?.essay;
+        }})
+        return user?.essay ?? [];
+    }catch(e) {
+        throw new Error("Erro no banco");
+    }
+
+    
 }
 
 export const getEssayModel = async (essayId:number, userId: number) => {
@@ -31,7 +36,8 @@ export const getEssayModel = async (essayId:number, userId: number) => {
             where: {id: essayId, userId},
         })
     }catch(e) {
-        console.error("Não foi possivel achar a redaçao!")
+        console.error("Não foi possivel achar a redaçao!");
+        throw new Error("Nao foi possivel encontrar a redação no banco");
     }
 }
 
@@ -45,7 +51,7 @@ export const postUserEssayModel = async (essayTitle: string, essayBody: string, 
             }
         })
     }catch(e){
-        console.error("Nao foi possivel cadastrar a redaçao no banco", e);
+        throw new Error("Nao foi possivel cadastrar a redaçao no banco", e);
     }
 
 }

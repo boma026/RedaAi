@@ -17,11 +17,9 @@ export default function AddEssay () {
     const userCtx = useUserCtx();
 
     const handleSendEssay = async (e: FormEvent<HTMLFormElement>) => {
-      
       e.preventDefault();
-      console.log("passou aqui");
+
       try{
-        console.log("passou aqui")
         const res = await api.post("/essay", {
         essayBody,
         essayTitle,
@@ -31,13 +29,12 @@ export default function AddEssay () {
           headers: { Authorization: `Bearer ${token}` }       
         }
       )
-        console.log("Resposta da API:", res.data);
         setEssayTitle("");
         setEssayBody("");
         router.push("/dashboard");
 
       }catch(e) {
-        console.log("erro ao enviar redaçao")
+        console.error("erro ao enviar redaçao");
       }
     }
 

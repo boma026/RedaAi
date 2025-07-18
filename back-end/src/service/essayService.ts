@@ -7,20 +7,21 @@ export const getUserEssays = async (id: number) => {
 }
 
 export const getEssay = async (essayId: number, userId: number) => {
+    try{
     return await getEssayModel(essayId,userId);
+    }catch(e){
+        throw new Error("Não foi possivel pegar a redação")
+    }
 }
 
 export const postUserEssay = async (essayTitle: string, essayBody: string, userId: number) => {
     const newEssay = await postUserEssayModel(essayTitle, essayBody, userId);
-    if(!newEssay){
-        return null;
-    }
     essayCorrect(essayBody)
         .then(async (correctionResult) => {
             await updateEssayAftrerCorrectionModel(newEssay.id, correctionResult)
     })
-    .catch((e) => {
-        console.error("erro na correçao por IA", e);
+        .catch((e) => {
+            throw new Error("erro na correçao por IA", e);
 
     })
     

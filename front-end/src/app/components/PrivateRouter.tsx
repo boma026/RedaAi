@@ -12,16 +12,15 @@ export const PrivateRouter = ({children}: PrivateRouterProps) => {
     const router = useRouter();
 
     const verifyToken = async (token: string) => {
-        try{const res = await api.get("/verify", {
+        try{
+            const res = await api.get("/verify", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        console.log(res.data.status);
 
         }
         catch(e) {
-            console.log(e);
             localStorage.removeItem("token");
             router.push("/login")
         }
