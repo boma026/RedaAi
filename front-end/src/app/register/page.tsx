@@ -31,7 +31,8 @@ export default function Register () {
           router.push("/login");
           
           }catch(e) {
-    
+            alert("Usuario já cadastrado");
+            console.log(e);
           }   
         }
 

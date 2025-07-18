@@ -10,16 +10,18 @@ export default function Forms() {
     
     const handleVerifyLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try{
         const res = await api.post("/login", {
             user,
             password
         })
 
-        console.log(res.data);
-        if(res.data.status === true && res.data.token){
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.userVerified))
-            router.push("/dashboard");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.userVerified))
+        router.push("/dashboard");
+
+        }catch(e){
+            alert("Usuário não encontrado");
         }
     }
     
